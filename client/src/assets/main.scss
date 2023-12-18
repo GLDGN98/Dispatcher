@@ -1,0 +1,17 @@
+
+// Setup
+@import "./styles/setup/functions";
+@import "./styles/setup/mixins";
+@import "./styles/setup/variables";
+
+// Basics
+@import "./styles/basics/base";
+@import "./styles/basics/helpers";
+@import "./styles/basics/layout";
+
+
+// Components
+@import "./styles/components/app-header";
+@import "./styles/components/news-list";
+@import "./styles/components/news-preview";
+

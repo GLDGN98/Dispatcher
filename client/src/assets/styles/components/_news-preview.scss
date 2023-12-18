@@ -1,0 +1,14 @@
+.news-preview {
+    max-width: 988px;
+    border: 1px solid #D9DBE9;
+    border-radius: 5px;
+    background-color: white;
+    display: flex;
+    gap: 1em;
+    
+
+    .article-image {
+        max-width: 245px;
+        
+    }
+}
