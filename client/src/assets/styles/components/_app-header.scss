@@ -1,5 +1,12 @@
 .app-header {
-    background-color: $clr1;
-    height: 74px;
-    color: white;
+  background-color: $clr1;
+  height: 74px;
+  color: white;
+
+  .logo {
+    position: absolute;
+    left: 20px;
+    align-self: center;
+    display: flex;
+  }
 }

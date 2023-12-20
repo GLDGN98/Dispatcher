@@ -1,11 +1,25 @@
-* {
-    box-sizing: border-box;
-  }
-  
-  body {
-    margin: 0;
-    background-color:  #F8F8FF;
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap");
 
-  }
-  
-  
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: #f8f8ff;
+  font-family: "Roboto", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+.sep {
+  border-bottom: 1px solid #d9dbe9;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

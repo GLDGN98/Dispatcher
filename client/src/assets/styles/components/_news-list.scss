@@ -1,6 +1,8 @@
 .news-list {
-    display: flex;
-    flex-direction: column;
-    list-style: none;
-    gap: 1em;
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  gap: em(24px);
+  max-height: 100vh; // Set your desired maximum height
+  overflow-y: auto; // Add a scrollbar when the content overflows
 }

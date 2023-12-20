@@ -1,0 +1,37 @@
+// Your existing styles
+
+.news-filter-input {
+  position: relative;
+  display: inline-block;
+
+  .filter-select {
+    appearance: none;
+    font-size: 14px;
+    border-radius: 4px;
+    background-color: #ffffff;
+    height: 47px;
+    width: 175px;
+    max-width: 175px;
+    color: #333;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    padding-inline-start: 10px;
+    font-size: 14px;
+
+    background-image: url("../../imgs/dropdown.svg");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 14px 14px;
+
+    &:hover {
+      border-color: #888;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: #555;
+    }
+  }
+}
