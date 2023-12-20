@@ -1,16 +1,20 @@
-import React from "react";
-import AppHeader from "../components/app-header";
+import React, { useState } from "react";
 import NewsList from "../components/news-list";
 import NewsFilter from "../components/news-filter";
+import { newsSerivce } from "../services/news-service";
 import GraphList from "../components/graph/graph-list";
 
 const MainPage = () => {
+  const [filterBy, setFilterBy] = useState(
+    newsSerivce.getEmptyArticleFilters()
+  );
+
   return (
     <div className="main-container">
-      <NewsFilter />
+      <NewsFilter filterBy={filterBy} setFilterBy={setFilterBy} />
       <div className="sep"></div>
-      <NewsList />
-      <GraphList />
+      <NewsList filterBy={filterBy} />
+      {/* <GraphList /> */}
     </div>
   );
 };

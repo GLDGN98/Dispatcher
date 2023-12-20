@@ -3,14 +3,24 @@
 import React, { useState } from "react";
 import dropdown from "../assets/imgs/dropdown.svg";
 import search from "../assets/imgs/search.svg";
+import { useQuery, useQueryClient } from "react-query";
 
 const SearchBar = () => {
-  const [searchTerm, setSearchTerm] = useState("");
   const [selectedOption, setSelectedOption] = useState("Everything");
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const queryClient = useQueryClient();
+
+  const { data: searchTerm, isLoading } = useQuery(
+    "searchTerm",
+    () => {}, // You can provide a dummy query function or leave it empty
+    {
+      initialData: "", // Initial value of searchTerm
+    }
+  );
 
   const handleSearchTermChange = (event) => {
-    setSearchTerm(event.target.value);
+    const newSearchTerm = event.target.value;
+    queryClient.setQueryData("searchTerm", newSearchTerm);
   };
 
   const handleOptionChange = (option) => {

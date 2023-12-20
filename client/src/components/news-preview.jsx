@@ -2,8 +2,6 @@ import React from "react";
 import { utilService } from "../services/util-service";
 
 const NewsPreview = ({ article }) => {
-  console.log(article);
-
   const navigateToArticle = () => {
     // Check if the article has a valid URL
     if (article.url) {

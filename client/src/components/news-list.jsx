@@ -1,21 +1,25 @@
 import React, { useEffect, useState, useRef } from "react";
 import { newsSerivce } from "../services/news-service";
 import NewsPreview from "./news-preview";
+import { useQuery } from "react-query";
 
-const NewsList = () => {
+const NewsList = (filterBy) => {
   const [news, setNews] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
   const observer = useRef();
+
+  const { data: searchTerm } = useQuery("searchTerm", () => {}, {
+    initialData: "", // Initial value of searchTerm
+  });
 
   useEffect(() => {
     setNews([]);
     setPage(1);
     setHasMore(true);
     fetchInitialNews();
-  }, [searchTerm]);
+  }, [searchTerm, filterBy]);
 
   useEffect(() => {
     if (!hasMore || loading) return;
@@ -35,7 +39,8 @@ const NewsList = () => {
   const fetchInitialNews = async () => {
     try {
       setLoading(true);
-      const fetchedNews = await newsSerivce.query(1, searchTerm);
+      const fetchedNews = await newsSerivce.query(1, searchTerm, filterBy);
+      console.log(fetchedNews);
       setNews(fetchedNews);
 
       if (fetchedNews.length < 10) {
@@ -53,7 +58,7 @@ const NewsList = () => {
   const fetchMoreNews = async () => {
     try {
       setLoading(true);
-      const fetchedNews = await newsSerivce.query(page, searchTerm);
+      const fetchedNews = await newsSerivce.query(page, searchTerm, filterBy);
       setNews((prevNews) => [...prevNews, ...fetchedNews]);
 
       if (fetchedNews.length === 0 || fetchedNews.length < 10) {
@@ -76,19 +81,9 @@ const NewsList = () => {
     }
   };
 
-  const handleInputChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
   return (
     <div className="news-list">
-      <h3>Top Headlines in Israel</h3>
-      <input
-        type="text"
-        placeholder="Search..."
-        value={searchTerm}
-        onChange={handleInputChange}
-      />
+      <h3>Top Headlines in {filterBy.filterBy.country}</h3>
       {news.map((article, index) => (
         <li key={index}>
           <NewsPreview article={article} />
