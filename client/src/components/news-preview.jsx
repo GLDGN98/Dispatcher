@@ -1,19 +1,30 @@
 import React from "react";
 import { utilService } from "../services/util-service";
-import { HiArrowSmallRight } from "react-icons/hi2";
-import arrowRight from "../assets/imgs/Arrow - Right.svg";
 
 const NewsPreview = ({ article }) => {
   console.log(article);
+
+  const navigateToArticle = () => {
+    // Check if the article has a valid URL
+    if (article.url) {
+      // Open the article URL in a new tab
+      window.open(article.url, "_blank");
+    } else {
+      console.warn("Article does not have a valid URL.");
+    }
+  };
+
   return (
     <div className="news-preview">
-      <div className="news-image">
-        <img
-          className="article-image"
-          src={article.urlToImage}
-          alt="Article Image"
-        />
-      </div>
+      {article.urlToImage && (
+        <div className="news-image">
+          <img
+            className="article-image"
+            src={article.urlToImage}
+            alt="Article Image"
+          />
+        </div>
+      )}
       <div className="news-info">
         <p className="published-at">
           {utilService.formatDateTime(article.publishedAt)}
@@ -21,7 +32,7 @@ const NewsPreview = ({ article }) => {
         <h4>{article.title}</h4>
         <p className="news-source">{article.source.name}</p>
         <p className="news-desc">{article.content}</p>
-        <button className="news-cta">
+        <button className="news-cta" onClick={navigateToArticle}>
           NAVIGATE TO DISPATCH{" "}
           <i className="cta-arrow">
             <svg
@@ -34,16 +45,16 @@ const NewsPreview = ({ article }) => {
               <path
                 d="M1.00027 9.03284L21 9.03284"
                 stroke="white"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
               <path
                 d="M9.06653 17.0651L0.999969 9.03323L9.06653 1"
                 stroke="white"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
           </i>
