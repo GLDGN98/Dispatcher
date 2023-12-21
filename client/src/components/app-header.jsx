@@ -4,7 +4,7 @@ import logo from "../assets/imgs/Dispatcher Logo.svg";
 
 const AppHeader = () => {
   return (
-    <div className="app-header main-container">
+    <div className="app-header full">
       <div className="logo">
         <img src={logo} alt="Dispatcher Logo" />
       </div>

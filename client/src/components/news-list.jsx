@@ -1,25 +1,26 @@
 import React, { useEffect, useState, useRef } from "react";
-import { newsSerivce } from "../services/news-service";
+import { newsService } from "../services/news-service";
 import NewsPreview from "./news-preview";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 
-const NewsList = (filterBy) => {
+const NewsList = () => {
   const [news, setNews] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const observer = useRef();
 
-  const { data: searchTerm } = useQuery("searchTerm", () => {}, {
-    initialData: "", // Initial value of searchTerm
-  });
+  const queryClient = useQueryClient();
+  const { data: filterBy } = useQuery("filterBy", () =>
+    queryClient.getQueryData("filterBy")
+  );
 
   useEffect(() => {
     setNews([]);
     setPage(1);
     setHasMore(true);
     fetchInitialNews();
-  }, [searchTerm, filterBy]);
+  }, [filterBy]);
 
   useEffect(() => {
     if (!hasMore || loading) return;
@@ -39,8 +40,7 @@ const NewsList = (filterBy) => {
   const fetchInitialNews = async () => {
     try {
       setLoading(true);
-      const fetchedNews = await newsSerivce.query(1, searchTerm, filterBy);
-      console.log(fetchedNews);
+      const fetchedNews = await newsService.query(1, filterBy);
       setNews(fetchedNews);
 
       if (fetchedNews.length < 10) {
@@ -58,7 +58,7 @@ const NewsList = (filterBy) => {
   const fetchMoreNews = async () => {
     try {
       setLoading(true);
-      const fetchedNews = await newsSerivce.query(page, searchTerm, filterBy);
+      const fetchedNews = await newsService.query(page);
       setNews((prevNews) => [...prevNews, ...fetchedNews]);
 
       if (fetchedNews.length === 0 || fetchedNews.length < 10) {
@@ -75,6 +75,7 @@ const NewsList = (filterBy) => {
 
   const handleObserver = (entries) => {
     const target = entries[0];
+    console.log("Observer triggered!", target);
 
     if (target.isIntersecting) {
       fetchMoreNews();
@@ -83,7 +84,7 @@ const NewsList = (filterBy) => {
 
   return (
     <div className="news-list">
-      <h3>Top Headlines in {filterBy.filterBy.country}</h3>
+      <h3>{filterBy.selectedOption || "Top Headlines"} in Israel</h3>
       {news.map((article, index) => (
         <li key={index}>
           <NewsPreview article={article} />

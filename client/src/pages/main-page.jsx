@@ -5,15 +5,12 @@ import { newsSerivce } from "../services/news-service";
 import GraphList from "../components/graph/graph-list";
 
 const MainPage = () => {
-  const [filterBy, setFilterBy] = useState(
-    newsSerivce.getEmptyArticleFilters()
-  );
-
   return (
-    <div className="main-container">
-      <NewsFilter filterBy={filterBy} setFilterBy={setFilterBy} />
+    <div>
+      {/* <div className="main-container"> */}
+      <NewsFilter />
       <div className="sep"></div>
-      <NewsList filterBy={filterBy} />
+      <NewsList />
       {/* <GraphList /> */}
     </div>
   );

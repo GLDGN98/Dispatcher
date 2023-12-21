@@ -4,13 +4,16 @@ import { Routes, Route } from "react-router";
 import { QueryClient, QueryClientProvider } from "react-query";
 import MainPage from "./pages/main-page";
 import AppHeader from "./components/app-header";
+import { newsService } from "./services/news-service";
 
 const queryClient = new QueryClient();
+
+queryClient.setQueryData("filterBy", newsService.getEmptyArticleFilters());
 
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <div>
+      <div className="main-container">
         <AppHeader />
         <Routes>
           <Route path="/" element={<MainPage />} />

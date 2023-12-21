@@ -2,11 +2,11 @@
   background-color: $clr1;
   height: 74px;
   color: white;
+  display: flex;
+  align-items: center;
+  gap: calc(154px - 20px);
+  padding: 20px;
 
   .logo {
-    position: absolute;
-    left: 20px;
-    align-self: center;
-    display: flex;
   }
 }
