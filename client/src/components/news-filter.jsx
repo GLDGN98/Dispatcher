@@ -88,7 +88,19 @@ const NewsFilter = () => {
       "Sports",
       "Technology",
     ].map((cat) => cat.toLowerCase()),
-    sources: ["source1", "source2", "source3"], // Add your sources here
+    sources: [
+      { id: "abc-news", name: "ABC News" },
+      { id: "bbc-news", name: "BBC News" },
+      { id: "cnn", name: "CNN" },
+      { id: "fox-news", name: "Fox News" },
+      { id: "the-huffington-post", name: "The Huffington Post" },
+      { id: "the-new-york-times", name: "The New York Times" },
+      { id: "reuters", name: "Reuters" },
+      { id: "the-wall-street-journal", name: "The Wall Street Journal" },
+      { id: "the-washington-post", name: "The Washington Post" },
+      { id: "usa-today", name: "USA Today" },
+      { id: "mako", name: "Mako" },
+    ], // Add your sources here
   };
 
   return (

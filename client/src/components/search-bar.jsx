@@ -5,20 +5,22 @@ import { useQuery, useQueryClient } from "react-query";
 
 const SearchBar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [recentSearches, setRecentSearches] = useState([]);
+  const [displaySearches, setDisplaySearches] = useState(false);
+  const [newQuery, setNewQuery] = useState("");
   const queryClient = useQueryClient();
 
   const { data: filterBy } = useQuery("filterBy", () =>
     queryClient.getQueryData("filterBy")
   );
 
-  console.log(filterBy);
-
   const handleSearchTermChange = (event) => {
     const newSearchTerm = event.target.value;
-    queryClient.setQueryData("filterBy", (prevFilterBy) => ({
-      ...prevFilterBy,
-      searchTerm: newSearchTerm,
-    }));
+    setNewQuery(newSearchTerm);
+    // queryClient.setQueryData("filterBy", (prevFilterBy) => ({
+    //   ...prevFilterBy,
+    //   searchTerm: newSearchTerm,
+    // }));
   };
 
   const handleOptionChange = (option) => {
@@ -28,13 +30,20 @@ const SearchBar = () => {
     }));
     setDropdownOpen(false);
   };
-  const capitalizedFilterName =
-    filterBy.selectedOption.charAt(0).toUpperCase() +
-    filterBy.selectedOption.slice(1);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
+
+  function handleSearch(e) {
+    if (e.key === "Enter") {
+      queryClient.setQueryData("filterBy", (prevFilterBy) => ({
+        ...prevFilterBy,
+        searchTerm: newQuery,
+      }));
+      setRecentSearches([...recentSearches, newQuery]);
+    }
+  }
 
   return (
     <div className="search-bar">
@@ -43,10 +52,19 @@ const SearchBar = () => {
         <input
           type="text"
           placeholder="Search"
-          value={filterBy.searchTerm}
+          value={newQuery}
           onChange={handleSearchTermChange}
+          onKeyDown={handleSearch}
+          onClick={() => setDisplaySearches(true)}
         />
       </div>
+      {displaySearches && (
+        <ul>
+          {recentSearches.map((search) => (
+            <li>{search}</li>
+          ))}
+        </ul>
+      )}
       <div className="dropdown-container">
         <div className="dropdown-trigger" onClick={toggleDropdown}>
           <span className="selected-option">

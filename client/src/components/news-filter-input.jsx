@@ -1,6 +1,3 @@
-import React from "react";
-import dropdown from "../assets/imgs/dropdown.svg";
-
 const NewsFilterInput = ({
   filterName,
   options,
@@ -18,36 +15,40 @@ const NewsFilterInput = ({
       </div>
       {openRadioOption && (
         <div className="radio-open">
-          {/* Add an empty option for reset */}
-          <input
-            type="radio"
-            id={`${filterName}-empty`}
-            name={filterName}
-            value=""
-            onChange={(ev) => handleChange(ev)}
-            checked={options.length === 0}
-          />
-          <label htmlFor={`${filterName}-empty`}>Reset</label>
-          <br />
-          {options.map((option) => (
-            <div className="radio-select-option" key={option.code || option}>
-              <input
-                type="radio"
-                id={`${filterName}-${option.code || option}`}
-                name={filterName}
-                value={option.code || option}
-                onChange={(ev) => handleChange(ev)}
-              />
-              <label htmlFor={`${filterName}-${option.code || option}`}>
-                {typeof option === "string"
-                  ? option.charAt(0).toUpperCase() + option.slice(1)
-                  : option.name ||
-                    (typeof option === "object" && option.toString()) ||
-                    option}
-              </label>
-              <br />
-            </div>
-          ))}
+          <div className="reset-option">
+            <input
+              type="radio"
+              id={`${filterName}-empty`}
+              name={filterName}
+              value=""
+              onChange={handleChange}
+              checked={options.length === 0}
+            />
+            <label htmlFor={`${filterName}-empty`}>Reset</label>
+          </div>
+          {options.map((option) => {
+            const isStringOption = typeof option === "string";
+            const optionValue = isStringOption ? option : option.id;
+            const optionDisplay = isStringOption
+              ? option.charAt(0).toUpperCase() + option.slice(1)
+              : option.name;
+
+            return (
+              <div className="radio-select-option" key={optionValue}>
+                <input
+                  type="radio"
+                  id={`${filterName}-${optionValue}`}
+                  name={filterName}
+                  value={optionValue}
+                  onChange={handleChange}
+                />
+                <label htmlFor={`${filterName}-${optionValue}`}>
+                  {optionDisplay}
+                </label>
+                <br />
+              </div>
+            );
+          })}
         </div>
       )}
     </div>

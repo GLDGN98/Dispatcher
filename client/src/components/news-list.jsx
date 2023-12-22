@@ -1,97 +1,71 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef } from "react";
+import { useInfiniteQuery, useQuery, useQueryClient } from "react-query";
 import { newsService } from "../services/news-service";
 import NewsPreview from "./news-preview";
-import { useQuery, useQueryClient } from "react-query";
 
 const NewsList = () => {
-  const [news, setNews] = useState([]);
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
   const observer = useRef();
-
   const queryClient = useQueryClient();
+
   const { data: filterBy } = useQuery("filterBy", () =>
     queryClient.getQueryData("filterBy")
   );
 
-  useEffect(() => {
-    setNews([]);
-    setPage(1);
-    setHasMore(true);
-    fetchInitialNews();
-  }, [filterBy]);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery(
+      ["news", filterBy],
+      ({ pageParam = 1 }) => newsService.query(pageParam, filterBy),
+      {
+        getNextPageParam: (lastPage, allPages) => {
+          const totalResults = lastPage.totalResults;
+          const currentPageNumber = allPages.length;
+          const totalPages = Math.ceil(totalResults / 10); // Assuming pageSize is 10
+
+          if (currentPageNumber < totalPages) {
+            return currentPageNumber + 1;
+          } else {
+            return undefined; // No more pages
+          }
+        },
+      }
+    );
 
   useEffect(() => {
-    if (!hasMore || loading) return;
-
     const options = {
       root: null,
-      rootMargin: "20px",
-      threshold: 0.1,
+      rootMargin: "200px",
+      threshold: 0.05,
     };
 
-    observer.current = new IntersectionObserver(handleObserver, options);
-    observer.current.observe(document.getElementById("observer-element"));
-
-    return () => observer.current.disconnect();
-  }, [hasMore, loading]);
-
-  const fetchInitialNews = async () => {
-    try {
-      setLoading(true);
-      const fetchedNews = await newsService.query(1, filterBy);
-      setNews(fetchedNews);
-
-      if (fetchedNews.length < 10) {
-        setHasMore(false);
-      } else {
-        setPage((prevPage) => prevPage + 1);
+    const observerCallback = (entries) => {
+      if (entries[0].isIntersecting && hasNextPage) {
+        fetchNextPage();
       }
-    } catch (error) {
-      console.error("Error fetching news:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
 
-  const fetchMoreNews = async () => {
-    try {
-      setLoading(true);
-      const fetchedNews = await newsService.query(page);
-      setNews((prevNews) => [...prevNews, ...fetchedNews]);
+    observer.current = new IntersectionObserver(observerCallback, options);
+    const element = document.getElementById("observer-element");
+    if (element) observer.current.observe(element);
 
-      if (fetchedNews.length === 0 || fetchedNews.length < 10) {
-        setHasMore(false);
-      } else {
-        setPage((prevPage) => prevPage + 1);
-      }
-    } catch (error) {
-      console.error("Error fetching news:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleObserver = (entries) => {
-    const target = entries[0];
-    console.log("Observer triggered!", target);
-
-    if (target.isIntersecting) {
-      fetchMoreNews();
-    }
-  };
+    return () => {
+      if (observer.current) observer.current.disconnect();
+    };
+  }, [fetchNextPage, hasNextPage]);
 
   return (
     <div className="news-list">
-      <h3>{filterBy.selectedOption || "Top Headlines"} in Israel</h3>
-      {news.map((article, index) => (
-        <li key={index}>
-          <NewsPreview article={article} />
-        </li>
+      <h3>{filterBy?.selectedOption || "Top Headlines"} in Israel</h3>
+      {data?.pages.map((group, i) => (
+        <React.Fragment key={i}>
+          {group.articles.map((article, index) => (
+            <li key={index}>
+              <NewsPreview article={article} />
+            </li>
+          ))}
+        </React.Fragment>
       ))}
-      {loading && <p>Loading...</p>}
-      {hasMore && <div id="observer-element"></div>}
+      {isFetchingNextPage && <p>Loading more news...</p>}
+      <div id="observer-element" />
     </div>
   );
 };
