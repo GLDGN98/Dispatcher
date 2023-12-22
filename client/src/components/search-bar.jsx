@@ -14,6 +14,10 @@ const SearchBar = () => {
     queryClient.getQueryData("filterBy")
   );
 
+  // const { data: filterState } = useQuery("filterState", () =>
+  //   queryClient.getQueryData("filterState")
+  // );
+
   const handleSearchTermChange = (event) => {
     const newSearchTerm = event.target.value;
     setNewQuery(newSearchTerm);
@@ -29,6 +33,9 @@ const SearchBar = () => {
       selectedOption: option,
     }));
     setDropdownOpen(false);
+    queryClient.setQueryData("filterState", () => ({
+      filterState: option,
+    }));
   };
 
   const toggleDropdown = () => {

@@ -22,7 +22,7 @@ async function query(page = 1, filterBy = {}) {
 }
 
 async function fetchNewsFromApi(page, filterBy) {
-  const apiKey = "a0549b44b1cd4643b29c4cbd5556a4d0";
+  const apiKey = "eda4990cac174d1b8f667fa78256bb1d";
   const pageSize = 10;
   const selectedOption =
     filterBy.selectedOption === "Top Headlines"
@@ -48,6 +48,24 @@ async function fetchNewsFromApi(page, filterBy) {
   } else {
     // For 'everything' endpoint, use the search term
     apiUrl += `&q=${filterBy.searchTerm || "news"}`;
+    if (filterBy.from && filterBy.to) {
+      apiUrl += `&from=${filterBy.from}&to=${filterBy.to}`;
+    }
+
+    // Handle Sources
+    if (filterBy.sources) {
+      apiUrl += `&sources=${filterBy.sources}`;
+    }
+
+    // Handle SortBy
+    if (filterBy.sortBy) {
+      apiUrl += `&sortBy=${filterBy.sortBy}`;
+    }
+
+    // Handle Language
+    if (filterBy.language) {
+      apiUrl += `&language=${filterBy.language}`;
+    }
   }
 
   try {
@@ -64,10 +82,14 @@ async function fetchNewsFromApi(page, filterBy) {
 
 function getEmptyArticleFilters() {
   return {
-    source: "",
+    sources: "",
     category: "",
     country: "",
     selectedOption: "Top Headlines",
     searchTerm: "",
+    language: "",
+    sortBy: "",
+    from: "",
+    to: "",
   };
 }
