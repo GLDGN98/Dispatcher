@@ -4,9 +4,17 @@
   color: white;
   display: flex;
   align-items: center;
-  gap: calc(154px - 20px);
-  padding: 20px;
+  position: relative;
+
+  .app-header-container {
+    max-width: 1024px;
+    width: 100%;
+    display: flex;
+    margin: 0 auto;
+  }
 
   .logo {
+    position: absolute;
+    left: 20px;
   }
 }

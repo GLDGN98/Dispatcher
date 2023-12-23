@@ -22,7 +22,7 @@ async function query(page = 1, filterBy = {}) {
 }
 
 async function fetchNewsFromApi(page, filterBy) {
-  const apiKey = "eda4990cac174d1b8f667fa78256bb1d";
+  const apiKey = "4779edd0ba2744748a189dc7f2303618";
   const pageSize = 10;
   const selectedOption =
     filterBy.selectedOption === "Top Headlines"
@@ -32,6 +32,9 @@ async function fetchNewsFromApi(page, filterBy) {
   let apiUrl = `https://newsapi.org/v2/${selectedOption}?pageSize=${pageSize}&page=${page}&apiKey=${apiKey}`;
 
   if (selectedOption === "top-headlines") {
+    if (filterBy.searchTerm) {
+      apiUrl += `&q=${filterBy.searchTerm || ""}`;
+    }
     if (filterBy.sources) {
       // If sources are provided, use only sources
       apiUrl += `&sources=${filterBy.sources}`;

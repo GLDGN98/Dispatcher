@@ -5,10 +5,12 @@ import logo from "../assets/imgs/Dispatcher Logo.svg";
 const AppHeader = () => {
   return (
     <div className="app-header full">
-      <div className="logo">
-        <img src={logo} alt="Dispatcher Logo" />
+      <div className="app-header-container">
+        <div className="logo">
+          <img src={logo} alt="Dispatcher Logo" />
+        </div>
+        <SearchBar />
       </div>
-      <SearchBar />
     </div>
   );
 };

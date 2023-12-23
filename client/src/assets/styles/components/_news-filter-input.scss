@@ -37,6 +37,10 @@
       font-size: 12px;
       width: 100%;
       padding: 1em;
+      max-width: 175px;
+      max-height: 28px;
+      display: flex;
+      align-items: center;
       &:hover {
         cursor: pointer;
       }
@@ -56,14 +60,14 @@
     outline: none;
     border: none;
     border-radius: 10px;
-    padding-inline-start: 10px;
+    padding-inline: 15px;
     font-size: 14px;
     display: flex;
     align-items: center;
 
     background-image: url("../../imgs/dropdown.svg");
     background-repeat: no-repeat;
-    background-position: right 8px center;
+    background-position: right 15px center;
     background-size: 14px 14px;
 
     &:hover {

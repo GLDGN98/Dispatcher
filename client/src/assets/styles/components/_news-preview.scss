@@ -2,7 +2,7 @@
   border: 1px solid #d9dbe9;
   background-color: white;
   display: flex;
-  gap: 0.5em;
+  gap: 16px;
   border-radius: 20px;
   height: 242px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
@@ -21,12 +21,11 @@
   }
 
   .news-info {
-    padding: 0 8px 0 8px;
     flex-direction: column;
     width: 100%;
     position: relative;
     display: flex;
-    gap: 14px;
+    gap: em(19.25px);
 
     h4 {
       font-size: 18px;
@@ -76,5 +75,8 @@
         transform: rotate(180deg);
       }
     }
+  }
+  .news-info-padding {
+    padding: 0 14px 0 14px; /* Adjust the padding as needed */
   }
 }

@@ -1,9 +1,24 @@
+.news-list-wrapper {
+  max-width: 988px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
 .news-list {
   display: flex;
   flex-direction: column;
   list-style: none;
   gap: em(24px);
-  max-height: 80vh;
+  max-height: 100%; /* take full height of the wrapper */
+  width: calc(100% - 16px); /* adjust width to account for padding */
+  margin: 0; /* reset any default margins */
   overflow-y: auto;
-  max-width: 988px;
+  padding: 0;
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px; /* adjust the height as needed */
 }

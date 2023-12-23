@@ -12,6 +12,10 @@ const NewsPreview = ({ article }) => {
     }
   };
 
+  const newsInfoClass = article.urlToImage
+    ? "news-info"
+    : "news-info news-info-padding";
+
   return (
     <div className="news-preview">
       {article.urlToImage && (
@@ -23,7 +27,7 @@ const NewsPreview = ({ article }) => {
           />
         </div>
       )}
-      <div className="news-info">
+      <div className={newsInfoClass}>
         <p className="published-at">
           {utilService.formatDateTime(article.publishedAt)}
         </p>

@@ -3,6 +3,8 @@ import { useInfiniteQuery, useQuery, useQueryClient } from "react-query";
 import { newsService } from "../services/news-service";
 import NewsPreview from "./news-preview";
 import { useState } from "react";
+import Loader from "./loader";
+import NoData from "./no-data";
 
 const NewsList = () => {
   const [results, setResults] = useState(0);
@@ -13,7 +15,7 @@ const NewsList = () => {
     queryClient.getQueryData("filterBy")
   );
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteQuery(
       ["news", filterBy],
       ({ pageParam = 1 }) => newsService.query(pageParam, filterBy),
@@ -64,22 +66,43 @@ const NewsList = () => {
       !filterBy.country) ||
     filterBy.country == "il";
 
-  return (
-    <div className="news-list">
-      {shouldRenderHeadlinesTitle && <h3>Top Headlines in Israel</h3>}
-      {!shouldRenderHeadlinesTitle && <p>Total Results {results}</p>}
+  console.log(filterBy);
 
-      {data?.pages.map((group, i) => (
-        <React.Fragment key={i}>
-          {group.articles.map((article, index) => (
-            <li key={index}>
-              <NewsPreview article={article} />
-            </li>
-          ))}
-        </React.Fragment>
-      ))}
-      {isFetchingNextPage && <p>Loading more news...</p>}
-      <div id="observer-element" />
+  return (
+    <div className="news-list-wrapper">
+      <ul className="news-list">
+        {shouldRenderHeadlinesTitle && <h3>Top Headlines in Israel</h3>}
+        {!shouldRenderHeadlinesTitle && <p>Total Results {results}</p>}
+
+        {isLoading ? (
+          <div className="loader-container">
+            <Loader />
+          </div>
+        ) : data?.pages[0]?.articles.length === 0 ? ( // Check if there are no articles
+          <div className="no-news-container">
+            <NoData />
+          </div>
+        ) : (
+          <>
+            {data?.pages.map((group, i) => (
+              <React.Fragment key={i}>
+                {group.articles.map((article, index) => (
+                  <li key={index}>
+                    <NewsPreview article={article} />
+                  </li>
+                ))}
+              </React.Fragment>
+            ))}
+            {isFetchingNextPage && (
+              <div className="loader-container">
+                <Loader />
+              </div>
+            )}
+          </>
+        )}
+
+        <div id="observer-element" />
+      </ul>
     </div>
   );
 };
