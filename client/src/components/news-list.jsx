@@ -66,8 +66,6 @@ const NewsList = () => {
       !filterBy.country) ||
     filterBy.country == "il";
 
-  console.log(filterBy);
-
   return (
     <div className="news-list-wrapper">
       <ul className="news-list">

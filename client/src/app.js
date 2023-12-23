@@ -9,7 +9,6 @@ import { newsService } from "./services/news-service";
 const queryClient = new QueryClient();
 
 queryClient.setQueryData("filterBy", newsService.getEmptyArticleFilters());
-queryClient.setQueryData("filterState", { filterState: "Top Headlines" });
 
 const App = () => {
   return (

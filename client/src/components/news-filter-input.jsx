@@ -9,6 +9,7 @@ const NewsFilterInput = ({
   openRadioOption,
   onInputClick,
   setSelectedDate, // Prop to set the selected date in parent
+  selectedValue,
 }) => {
   const [localDate, setLocalDate] = useState(new Date());
 
@@ -18,6 +19,8 @@ const NewsFilterInput = ({
     // If necessary, format the date and update the filter
     // Example: handleChange({ target: { name: 'date', value: formattedDate } });
   };
+
+  console.log(filterName, "filter name");
 
   if (filterName === "dates" && openRadioOption) {
     return (
@@ -59,6 +62,7 @@ const NewsFilterInput = ({
             const optionDisplay = isObjectOption
               ? option.name
               : option.charAt(0).toUpperCase() + option.slice(1);
+            const isSelected = optionValue === selectedValue;
 
             return (
               <div className="radio-select-option" key={optionValue}>
@@ -69,7 +73,14 @@ const NewsFilterInput = ({
                   value={optionValue}
                   onChange={handleChange}
                 />
-                <label htmlFor={`${filterName}-${optionValue}`}>
+                <label
+                  style={{
+                    backgroundColor: isSelected
+                      ? "rgba(223, 224, 235, 0.41)"
+                      : "",
+                  }}
+                  htmlFor={`${filterName}-${optionValue}`}
+                >
                   {optionDisplay}
                 </label>
                 <br />

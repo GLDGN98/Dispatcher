@@ -22,7 +22,7 @@ async function query(page = 1, filterBy = {}) {
 }
 
 async function fetchNewsFromApi(page, filterBy) {
-  const apiKey = "4779edd0ba2744748a189dc7f2303618";
+  const apiKey = "2f1ae84463034c739247f26833ce3062";
   const pageSize = 10;
   const selectedOption =
     filterBy.selectedOption === "Top Headlines"

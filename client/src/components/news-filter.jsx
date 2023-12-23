@@ -13,9 +13,6 @@ const NewsFilter = () => {
   const { data: filterBy } = useQuery("filterBy", () =>
     queryClient.getQueryData("filterBy")
   );
-  const { data: filterState } = useQuery("filterState", () =>
-    queryClient.getQueryData("filterState")
-  );
 
   const handleInputClick = (filterName) => {
     setOpenRadioOption(filterName === openRadioOption ? null : filterName);
@@ -31,9 +28,10 @@ const NewsFilter = () => {
 
   return (
     <div className="news-filter">
-      {filterState.filterState === "Top Headlines" &&
+      {filterBy.selectedOption === "Top Headlines" &&
         Object.keys(filterOptions).map((filterName) => (
           <NewsFilterInput
+            selectedValue={filterBy[filterName]}
             key={filterName}
             filterName={filterName}
             options={
@@ -46,9 +44,10 @@ const NewsFilter = () => {
           />
         ))}
 
-      {filterState.filterState === "Everything" &&
+      {filterBy.selectedOption === "Everything" &&
         Object.keys(additionalFilterOptions).map((filterName) => (
           <NewsFilterInput
+            selectedValue={filterBy[filterName]}
             key={filterName}
             filterName={filterName}
             options={
