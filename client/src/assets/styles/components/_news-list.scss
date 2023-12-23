@@ -2,6 +2,22 @@
   max-width: 988px;
   max-height: 80vh;
   overflow-y: auto;
+  .news-total-results {
+    color: rgba(90, 90, 137, 0.5);
+    font-feature-settings: "clig" off, "liga" off;
+    font-family: Roboto;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px; /* 157.143% */
+    letter-spacing: 0.25px;
+    padding-bottom: 11px;
+  }
+
+  .top-headlines-il {
+    margin-top: 12px;
+    margin-bottom: 20px;
+  }
 }
 
 .news-list {

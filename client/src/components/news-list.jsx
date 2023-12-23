@@ -68,10 +68,13 @@ const NewsList = () => {
 
   return (
     <div className="news-list-wrapper">
+      {shouldRenderHeadlinesTitle && (
+        <h3 className="top-headlines-il">Top Headlines in Israel</h3>
+      )}
+      {!shouldRenderHeadlinesTitle && (
+        <p className="news-total-results">{results} Total Results</p>
+      )}
       <ul className="news-list">
-        {shouldRenderHeadlinesTitle && <h3>Top Headlines in Israel</h3>}
-        {!shouldRenderHeadlinesTitle && <p>Total Results {results}</p>}
-
         {isLoading ? (
           <div className="loader-container">
             <Loader />
