@@ -47,6 +47,7 @@ const NewsList = () => {
 
     const observerCallback = (entries) => {
       if (entries[0].isIntersecting && hasNextPage) {
+        console.log('hi');
         fetchNextPage();
       }
     };

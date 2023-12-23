@@ -16,6 +16,7 @@
   .search-container {
     display: flex;
     gap: 0.5em;
+    align-items: flex-end;
   }
   ul {
     position: absolute;
@@ -138,6 +139,7 @@
         padding: 10px;
         width: 100%;
         color: #5a5a89;
+        border-radius: 10px;
 
         &:hover {
           background: #f0f0f0;

@@ -24,3 +24,38 @@ p {
   margin-top: 20px;
   margin-bottom: 8px;
 }
+
+#observer-element{
+  width: 2px;
+  height: 2px;
+}
+
+/* Track */
+/* Track for horizontal scrollbar */
+::-webkit-scrollbar {
+  height: 6px; /* Adjust the height as needed */
+  width: 6px;
+}
+
+/* Handle for horizontal scrollbar */
+::-webkit-scrollbar-thumb {
+  background-color: #ccc; /* Change the color as desired */
+  border-radius: 6px; /* Make it round */
+}
+
+/* Handle on hover for horizontal scrollbar */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #999; /* Change the color on hover */
+}
+
+/* Track for horizontal scrollbar when it's at the bottom */
+::-webkit-scrollbar-track-piece:horizontal:end {
+  background-color: transparent; /* Change the color if needed */
+}
+
+/* Track for horizontal scrollbar when it's at the top */
+::-webkit-scrollbar-track-piece:horizontal:start {
+  background-color: transparent; /* Change the color if needed */
+}
+
+

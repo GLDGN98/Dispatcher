@@ -2,11 +2,15 @@ import { storageService } from "./storage-service.js";
 import axios from "axios";
 
 const STORAGE_KEY = "newsDB";
+const apiKey = process.env.REACT_APP_API_KEY
+
 
 export const newsService = {
   query,
   getEmptyArticleFilters,
 };
+
+// const apiKey = process.env.API_KEY
 
 async function query(page = 1, filterBy = {}) {
   try {
@@ -21,8 +25,8 @@ async function query(page = 1, filterBy = {}) {
   }
 }
 
+
 async function fetchNewsFromApi(page, filterBy) {
-  const apiKey = "2f1ae84463034c739247f26833ce3062";
   const pageSize = 10;
   const selectedOption =
     filterBy.selectedOption === "Top Headlines"
@@ -46,7 +50,6 @@ async function fetchNewsFromApi(page, filterBy) {
       if (filterBy.category) {
         apiUrl += `&category=${filterBy.category}`;
       }
-      console.log(apiUrl);
     }
   } else {
     // For 'everything' endpoint, use the search term
